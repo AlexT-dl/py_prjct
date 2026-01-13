@@ -38,7 +38,7 @@ async def status_perm():
             for parent in soup.find_all('tr'):
                 items = parent.find_all('td')
                 for item in items:
-                    if (item.get_text() in name_list):
+                    if item.get_text() in name_list:
                         st_from_site = items[3].get_text()
                         rb_name = items[1].get_text()
                         st_cursor.execute('SELECT status FROM rb WHERE name = ?', (rb_name,))
@@ -54,7 +54,8 @@ async def status_perm():
                                 await bot.send_message(-1002481339545, ('Убит ' + rb_name))
             st_connection.close()
             await asyncio.sleep(30)
-        except:
+        except ConnectionError as e:
+            await bot.send_message(-1002481339545, str(e))
             await asyncio.sleep(10)
 
 
@@ -68,16 +69,16 @@ async def stat(message):
         for parent in soup.find_all('tr'):
             items = parent.find_all('td')
             for item in items:
-                if (item.get_text() in name_list):
+                if item.get_text() in name_list:
                     j = items[3].get_text()
                     if j == 'Жив':
                         k = items[1].get_text()
                         lst.append(str(k))
-                        frmtd_lst = '\n'.join(lst)
+        frmtd_lst = '\n'.join(lst)
         '''await bot.send_message(495911930, frmtd_lst)'''
         await bot.send_message(-1002481339545, frmtd_lst)
     except ConnectionError as e:
-        await bot.send_message(-1002481339545, e)
+        await bot.send_message(-1002481339545, str(e))
 
 
 if __name__ == "__main__":
