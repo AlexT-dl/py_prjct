@@ -7,8 +7,9 @@ name_list = ['Ketra\'s Chief Brakki','Varka\'s Chief Horus', 'Ember', 'Ketra\'s 
 
 # Создание таблицы (пример)
 '''cursor.execute("update rb set status = 'Мертв'")
+conn.commit()
+cursor.execute('INSERT INTO rb (name, status) VALUES("Flame of Splendor Barakiel", "Жив")')
 conn.commit()'''
-
 cursor.execute('''select * from rb''')
 for row in cursor.fetchall():
     print(row)

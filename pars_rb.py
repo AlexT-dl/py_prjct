@@ -4,14 +4,13 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
 import requests
 from bs4 import BeautifulSoup
-from requests.cookies import remove_cookie_by_name
 
 # Объект бота
 bot = Bot(token="7878418002:AAHdRMUw-eHF3QZEwbu72McbO-fHMRVRQfI")
 # Диспетчер
 dp = Dispatcher()
 
-name_list = ['Ketra\'s Chief Brakki','Varka\'s Chief Horus', 'Ember', 'Ketra\'s Commander Tayr', 'Varka\'s Commander Mos', 'Anakim', 'Ketra\'s Hero Hekaton', 'Lilith', 'Varka\'s Hero Shadith', 'Cherub Galaxia', 'Longhorn Golkonda', 'Fire of Wrath Shuriel', 'Hestia,Guardian Deity of the Hot Springs', 'Last Lesser Giant Glaki', 'Ocean Flame Ashakiel', 'Bloody Empress Decarbia', 'Death Lord Ipos', 'Death Lord Shax', 'Kernon', 'Last Lesser Giant Olkuth', 'Palatanos of Horrific Power', 'Storm Winged Naga', 'Antharas Priest Cloe', 'Krokian Padisha Sobekk', 'Death Lord Hallate', 'Doom Blade Tanatos', 'Vanor Chief Kandra', 'Water Dragon Seer Sheshark', 'Eilhalder von Hellmann', 'Immortal Savior Mardil']
+name_list = ['Ketra\'s Chief Brakki','Varka\'s Chief Horus', 'Ember', 'Ketra\'s Commander Tayr', 'Varka\'s Commander Mos', 'Anakim', 'Ketra\'s Hero Hekaton', 'Lilith', 'Varka\'s Hero Shadith', 'Cherub Galaxia', 'Longhorn Golkonda', 'Fire of Wrath Shuriel', 'Hestia,Guardian Deity of the Hot Springs', 'Last Lesser Giant Glaki', 'Ocean Flame Ashakiel', 'Bloody Empress Decarbia', 'Death Lord Ipos', 'Death Lord Shax', 'Kernon', 'Last Lesser Giant Olkuth', 'Palatanos of Horrific Power', 'Storm Winged Naga', 'Antharas Priest Cloe', 'Krokian Padisha Sobekk', 'Death Lord Hallate', 'Doom Blade Tanatos', 'Vanor Chief Kandra', 'Water Dragon Seer Sheshark', 'Eilhalder von Hellmann', 'Immortal Savior Mardil', 'Flame of Splendor Barakiel/']
 url = "https://l2play.su/stat/raid/s1"
 
 # Хэндлер на команду /start
@@ -47,7 +46,12 @@ async def status_perm():
                     if str(st_from_site) != st_from_db_cl:
                         st_cursor.execute('UPDATE rb SET status = ? where name = ?', (st_from_site, rb_name))
                         st_connection.commit()
-                        await bot.send_message(495911930, (rb_name + ' - ' + st_from_site))
+                        '''await bot.send_message(495911930, (rb_name + ' - ' + st_from_site))'''
+                        if str(st_from_site) == "Жив":
+                            await bot.send_message(-1002481339545, (rb_name + ' - ' + st_from_site))
+                        else:
+                            await bot.send_message(-1002481339545, ('Убит ' + rb_name))
+
         st_connection.close()
         await asyncio.sleep(30)
 
@@ -66,7 +70,8 @@ async def stat(message):
                     k = items[1].get_text()
                     lst.append(str(k))
                     frmtd_lst = '\n'.join(lst)
-    await bot.send_message(495911930, frmtd_lst)
+    '''await bot.send_message(495911930, frmtd_lst)'''
+    await bot.send_message(-1002481339545, frmtd_lst)
 
 
 
